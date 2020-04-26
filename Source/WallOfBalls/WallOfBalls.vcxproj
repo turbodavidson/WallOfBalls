@@ -48,6 +48,7 @@
     <ClInclude Include="Particles.h" />
     <ClInclude Include="SaveDIBitmap.h" />
     <ClInclude Include="Sound.h" />
+    <ClInclude Include="stb_image_write.h" />
     <ClInclude Include="TextureImage.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
