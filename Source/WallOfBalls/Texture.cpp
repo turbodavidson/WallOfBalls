@@ -5,8 +5,11 @@
 #include <stdio.h>
 
 #include "TextureImage.h"
+#include "LoadTGA.h"
 
-bool LoadTGA(TextureImage *, char *);
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>	
+
 GLvoid BuildFont(GLvoid);
 
 int texture_num=3;
@@ -15,59 +18,33 @@ char texnames[3][32]={"art/grass1.bmp",
 					  "art/clouds.bmp"};
 GLuint texture[3];
 
-AUX_RGBImageRec *LoadBMP(char *Filename);
-
 extern TextureImage Fonts[1];
 extern TextureImage *CBTexture;
 extern TextureImage *Smoke;
 
-
-
 int LoadGLTextures()
 {
-	LoadTGA(&Fonts[0],"art/font.tga");
+	LoadTGA(&Fonts[0],"art/font.tga", true);
 	BuildFont();
 	LoadTGA(CBTexture,"art/cannonball.tga");
 	LoadTGA(Smoke,"art/smoke.tga");
 	int Status=false;
-	AUX_RGBImageRec *TextureImage[3];
-	memset(TextureImage,0,sizeof(void *)*1);
 	int counter;
+
+	stbi_set_flip_vertically_on_load(false);
 	for (counter=0;counter<texture_num;counter++)
 	{
-		if (TextureImage[counter]=LoadBMP(texnames[counter]))
-		{
-			Status=true;
+		int width, height, channels;
+		void *imageData = stbi_load(texnames[counter], &width, &height, &channels, STBI_rgb);
+		if (imageData) {
+			Status = true;
 			glGenTextures(1, &texture[counter]);
-			glBindTexture(GL_TEXTURE_2D,texture[counter]);
-			glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR_MIPMAP_NEAREST);
-			gluBuild2DMipmaps(GL_TEXTURE_2D, 3, TextureImage[counter]->sizeX, TextureImage[counter]->sizeY, GL_RGB, GL_UNSIGNED_BYTE, TextureImage[counter]->data);
-		}
-		if (TextureImage[counter])
-		{
-			if (TextureImage[counter]->data)
-			{
-				free(TextureImage[counter]->data);
-			}
-			free(TextureImage[counter]);
+			glBindTexture(GL_TEXTURE_2D, texture[counter]);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+			gluBuild2DMipmaps(GL_TEXTURE_2D, 3, width, height, GL_RGB, GL_UNSIGNED_BYTE, imageData);
+			stbi_image_free(imageData);
 		}
 	}
 	return Status;
-}
-
-AUX_RGBImageRec *LoadBMP(char *Filename)
-{
-	FILE *File=NULL;
-	if (!Filename)
-	{
-		return NULL;
-	}
-	File=fopen(Filename,"r");
-	if (File)
-	{
-		fclose(File);
-		return auxDIBImageLoad(Filename);
-	}
-	return NULL;
 }

@@ -101,5 +101,8 @@
     <ClInclude Include="TextureImage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LoadTGA.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

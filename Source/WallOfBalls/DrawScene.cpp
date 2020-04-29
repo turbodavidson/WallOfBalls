@@ -5,6 +5,7 @@
 #include "TextureImage.h"
 #include "DataTypes.h"
 #include "cannonball.h"
+#include "LoadTGA.h"
 
 TextureImage *Water=new TextureImage;
 TextureImage *Shotgun=new TextureImage;
@@ -52,10 +53,6 @@ static GLubyte wallindexes[]={1,0,2,
 						1,3,7};
 // End of Wall Crap
 
-// TGA Crap
-bool LoadTGA(TextureImage *texture, char *filename);
-//
-
 void CompileOriginalScene(void)
 {
 	myWater->Scale(1.2);
@@ -70,7 +67,7 @@ void CompileOriginalScene(void)
 	{
 	Clouds->interpolateMesh();
 	}
-	LoadTGA(Shotgun,"art/Shotgun1.tga");
+	LoadTGA(Shotgun,"art/Shotgun1.tga", false);
 	LoadTGA(Water,"art/Water.tga");
 	Grass=glGenLists(1);
 	glNewList(Grass,GL_COMPILE);
