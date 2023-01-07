@@ -29,13 +29,13 @@ class SoundManager
     BOOL m_bOperational; 
     BOOL CreateBuffer(int index,int length,int copies);
     BOOL LoadBuffer(int index,BYTE *buffer,int length);
-    int LoadSound(char *filename,BYTE **sound); 
+    int LoadSound(wchar_t *filename,BYTE **sound); 
     void CopyBuffer(int index,int copies); 
   public:
     SoundManager(HWND hwnd); 
     ~SoundManager();
     void clear();
-    void load(char *filename,int copies=1); 
+    void load(wchar_t *filename,int copies=1); 
     void play(int index,BOOL looping=FALSE); 
     void stopsound(int index);
     void stop(void);

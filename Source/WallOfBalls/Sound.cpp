@@ -16,7 +16,7 @@ SoundManager::SoundManager(HWND hwnd)
 	  m_lpBuffer[i]=NULL; m_nCopyCount[i]=0;
   }
 	DirectSoundCreate(NULL,&m_lpDirectSound,NULL);
-	m_lpDirectSound->SetCooperativeLevel(hwnd,DSSCL_NORMAL);
+	m_lpDirectSound->SetCooperativeLevel(hwnd, DSSCL_NORMAL);
 }
 
 SoundManager::~SoundManager()
@@ -44,7 +44,7 @@ void SoundManager::clear()
   m_nCount=0; 
 }
 
-void SoundManager::load(char *filename,int copies)
+void SoundManager::load(wchar_t *filename,int copies)
 {
 	int length; 
 	
@@ -131,6 +131,9 @@ BOOL SoundManager::CreateBuffer(int index,int length,int copies)
 
 BOOL SoundManager::LoadBuffer(int index,BYTE *sound,int length)
 {
+	if (sound == NULL) {
+		return FALSE;
+	}
 
   LPVOID w1,w2; 
   DWORD l1,l2; 
@@ -153,7 +156,7 @@ BOOL SoundManager::LoadBuffer(int index,BYTE *sound,int length)
   return TRUE;
 }
 
-int SoundManager::LoadSound(char *filename,BYTE **buffer)
+int SoundManager::LoadSound(wchar_t *filename,BYTE **buffer)
 {
 
   HMMIO hmfr;
@@ -226,18 +229,18 @@ int SoundManager::LoadSound(char *filename,BYTE **buffer)
 
 void LoadSounds()
 {
-	Sounds->load("sounds/Track0.wav");
-	Sounds->load("sounds/Track1.wav");
-	Sounds->load("sounds/Track2.wav");
-	Sounds->load("sounds/Track3.wav");
-	Sounds->load("sounds/Track4.wav");
-	Sounds->load("sounds/Track5.wav");
-	Sounds->load("sounds/Track6.wav");
+	Sounds->load(L"Sounds/Track0.wav");
+	Sounds->load(L"Sounds/Track1.wav");
+	Sounds->load(L"Sounds/Track2.wav");
+	Sounds->load(L"Sounds/Track3.wav");
+	Sounds->load(L"Sounds/Track4.wav");
+	Sounds->load(L"Sounds/Track5.wav");
+	Sounds->load(L"Sounds/Track6.wav");
 	
-	Sounds->load("sounds/Story.wav");
-	Sounds->load("sounds/Intro.wav");
-	Sounds->load("sounds/awp1.wav");
-	Sounds->load("sounds/jump.wav");
-	Sounds->load("sounds/jumpland.wav");
-	Sounds->load("sounds/treb3.wav");
+	Sounds->load(L"Sounds/Story.wav");
+	Sounds->load(L"Sounds/Intro.wav");
+	Sounds->load(L"Sounds/awp1.wav");
+	Sounds->load(L"Sounds/jump.wav");
+	Sounds->load(L"Sounds/jumpland.wav");
+	Sounds->load(L"Sounds/treb3.wav");
 }

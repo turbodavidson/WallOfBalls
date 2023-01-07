@@ -1,0 +1,6 @@
+System/
+Source/WallOfBalls/.vs/
+Source/WallOfBalls/Debug
+Source/WallOfBalls/Release
+Source/WallOfBalls/*.user
+Source/WallOfBalls/*.filters

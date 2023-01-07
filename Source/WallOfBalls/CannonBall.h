@@ -1,16 +1,11 @@
 #ifndef __CannonBall_h__
 #define __CannonBall_h__
 
-#include <windows.h>
+#include <Windows.h>
 #include <gl/gl.h>
 #include <math.h>
 
-#include "TextureImage.h"
-
 #include "DataTypes.h"
-
-extern TextureImage *CBTexture;
-extern TextureImage *Smoke;
 
 class cannonball
 {
@@ -23,6 +18,7 @@ public:
 	bool checkforcollision(double,double,double);
 	void regenerate();
 	void update();
+	vect3_t getPosition();
 
 private:
 	vect3_t position;

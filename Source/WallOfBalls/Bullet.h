@@ -5,11 +5,8 @@
 #include <gl/gl.h>
 #include <math.h>
 
-#include "TextureImage.h"
-
+#include "DriverGL11.h"
 #include "DataTypes.h"
-
-extern TextureImage *CBTexture;
 
 class bullet
 {

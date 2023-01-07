@@ -2,6 +2,7 @@
 #define __DCamera_h__
 
 #include "DataTypes.h"
+#include "DriverGL11.h"
 
 class Camera
 {
@@ -14,6 +15,7 @@ public:
 	void LookSideWays(double);
 	void LookUp(double);
 	void LookAt();
+	bool Look(int x, int y);
 	void Jump(void);
 	//
 	double getAngleX(void);
@@ -41,6 +43,8 @@ private:
 	vect3_t velocity;
 	double gravity;
 	int m_jumpStartTime;
+	int prevX;
+	int prevY;
 };
 
 #endif

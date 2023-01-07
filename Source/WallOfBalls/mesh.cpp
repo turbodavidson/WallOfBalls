@@ -1,6 +1,6 @@
 #include "mesh.h"
+#include "DriverGL11.h"
 
-extern GLuint texture[];
 const int interPolationLevel=1;
 
 float rnd(int range);
@@ -106,28 +106,28 @@ void mesh::setCentre(GLfloat y)
 void mesh::renderMesh()
 {
 	angle+=amt;
-	glRotated(angle,0.0,1.0,0.0);
+	DriverGL11::Rotated(angle,0.0,1.0,0.0);
 	if (angle>360.0)
 		angle=angle-360.0;
 	if (angle<-360.0)
 		angle+=360.0;
 	for (int cx=1;cx<48;cx++)
 	{
-		glBegin(GL_TRIANGLE_STRIP);
+		DriverGL11::Begin(GL_TRIANGLE_STRIP);
 		for (int cz=1;cz<49;cz++)
 		{
-			glTexCoord2d(m_meshPoint[cx][cz].tx,m_meshPoint[cx][cz].ty);
-			glVertex3d( m_meshPoint[cx][cz].x,
+			DriverGL11::TexCoord2d(m_meshPoint[cx][cz].tx,m_meshPoint[cx][cz].ty);
+			DriverGL11::Vertex3d( m_meshPoint[cx][cz].x,
 						m_meshPoint[cx][cz].y,
 						m_meshPoint[cx][cz].z);
-			glTexCoord2d(m_meshPoint[cx+1][cz].tx,m_meshPoint[cx+1][cz].ty);
-			glVertex3d( m_meshPoint[cx+1][cz].x,
+			DriverGL11::TexCoord2d(m_meshPoint[cx+1][cz].tx,m_meshPoint[cx+1][cz].ty);
+			DriverGL11::Vertex3d( m_meshPoint[cx+1][cz].x,
 						m_meshPoint[cx+1][cz].y,
 						m_meshPoint[cx+1][cz].z);
 		}
-		glEnd();
+		DriverGL11::End();
 	}
-	glRotated(-angle,0.0,1.0,0.0);
+	DriverGL11::Rotated(-angle,0.0,1.0,0.0);
 }
 
 void mesh::SetMeshPos(double y)

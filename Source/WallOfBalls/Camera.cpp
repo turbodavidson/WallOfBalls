@@ -6,14 +6,16 @@
 #include "sound.h"
 #include "cannonball.h"
 
-extern cannonball *CannonBall[20];
+#include "Game.h"
+
+//extern cannonball *CannonBall[20];
 
 extern SoundManager* Sounds;
 
-extern bool game_over;
-extern bool won;
+//extern bool game_over;
+//extern bool won;
 
-GLvoid glPrint(GLint x, GLint y, int set, const char *fmt, ...);
+//GLvoid glPrint(GLint x, GLint y, int set, const char *fmt, ...);
 
 Camera::Camera()
 {
@@ -25,6 +27,8 @@ Camera::Camera()
 	jumping=false;
 	gravity=-9.80665;
 	score=0;
+	prevX = 512;
+	prevY = 384;
 }
 
 Camera::~Camera()
@@ -74,14 +78,37 @@ void Camera::LookUp(double amount)
 			Angle[0]=90.0;
 }
 
+bool Camera::Look(int x, int y)
+{
+	bool clampCursor = false;
+	LookSideWays(-(double(prevX-(x)))/8.0);
+	prevX = x;
+	LookUp(-(double(prevY-(y)))/8.0);
+	prevY = y;
+
+	if (x < 312 || x > 712)
+	{
+		clampCursor = true;
+		prevX = 512;
+		prevY = 384;
+	}
+	if (y < 184 || y > 584)
+	{
+		clampCursor = true;
+		prevX = 512;
+		prevY = 384;
+	}
+	return clampCursor;
+}
+
 void Camera::LookAt()
 {
 	Timer->update();
 
 	for (int counter=0;counter<40;counter++)
-	if (CannonBall[counter]->checkforcollision(-Pos[0],-Pos[1],-Pos[2]))
+	if (G.cannonBallRender[counter].cb->checkforcollision(-Pos[0],-Pos[1],-Pos[2]))
 	{
-		game_over=true;
+		G.game_over=true;
 	}
 
 	if (jumping)
@@ -108,10 +135,10 @@ void Camera::LookAt()
 	if (Pos[2]<-499.0)
 			Pos[2]=-499.0;
 	
-	glRotated(Angle[0],1.0,0.0,0.0);
-	glRotated(Angle[1],0.0,1.0,0.0);
-	glRotated(Angle[2],0.0,0.0,1.0);
-	glTranslated(Pos[0],Pos[1],Pos[2]);
+	DriverGL11::Rotated(Angle[0],1.0,0.0,0.0);
+	DriverGL11::Rotated(Angle[1],0.0,1.0,0.0);
+	DriverGL11::Rotated(Angle[2],0.0,0.0,1.0);
+	DriverGL11::Translated(Pos[0],Pos[1],Pos[2]);
 }
 
 void Camera::Jump(void)
@@ -185,8 +212,8 @@ void Camera::incscore()
 	score+=1;
 	if (score>=101)
 	{
-		won=true;
-		game_over=true;
+		G.won=true;
+		G.game_over=true;
 	}
 }
 
@@ -195,6 +222,8 @@ void Camera::drawscore()
 	char myscore[16];
 	itoa(score,myscore,10);
 
-	glPrint(0,10,1,"Score: ");
-	glPrint(90,10,1,myscore);
+	DriverGL11::Print(0, 10, 1, "Score: ");
+	DriverGL11::Print(90, 10, 1, myscore);
+	//glPrint(0,10,1,"Score: ");
+	//glPrint(90,10,1,myscore);
 }
