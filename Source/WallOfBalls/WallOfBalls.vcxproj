@@ -44,6 +44,7 @@
     <ClInclude Include="Font.h" />
     <ClInclude Include="GlobalEnum.h" />
     <ClInclude Include="LoadBMP.h" />
+    <ClInclude Include="LoadTGA.h" />
     <ClInclude Include="mesh.h" />
     <ClInclude Include="Particles.h" />
     <ClInclude Include="SaveDIBitmap.h" />
@@ -106,18 +107,22 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(ProjectDir)GL;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\3rdParty\stb;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(ProjectDir)GL;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\3rdParty\stb;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(ProjectDir)GL;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\3rdParty\stb;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(ProjectDir)GL;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)..\3rdParty\stb;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

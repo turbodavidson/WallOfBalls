@@ -9,7 +9,6 @@
 
 #include "DataTypes.h"
 
-bool LoadTGA(TextureImage *texture, char *filename);
 extern TextureImage *CBTexture;
 
 class bullet
