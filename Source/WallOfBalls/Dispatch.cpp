@@ -19,16 +19,7 @@
 #include "System.h"
 #include "Game.h"
 
-extern GLuint MAX_SCREENMODES;
-extern GLuint MAX_SCREENBPP;
-
-extern GLuint app_ScreenModes[3][2];
-extern GLuint app_ScreenBPP[2];
-
-extern GLuint CURRENT_SCREENMODE;
-extern GLuint CURRENT_SCREENBPP;
 extern SoundManager* Sounds;
-
 
 int tracknumber = 0;
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -52,80 +43,10 @@ bool Dispatch(int msgInput)
 		S.RemoveCommand(EXIT);
 		return true;
 		break;
-	case SWITCH_SCREENMODE:
-		//S.FreeWindow();
-		//S.FreeDriver();
-
-		S.RemoveCommand(SWITCH_SCREENMODE);
-		S.ForceKey(SWITCH_SCREENMODE, false);
-
-		CURRENT_SCREENMODE++;
-		if (CURRENT_SCREENMODE==MAX_SCREENMODES)
-			CURRENT_SCREENMODE=0;
-		//if (!CreateGLWindow(APP_NAME,
-		//					app_ScreenModes[CURRENT_SCREENMODE][0],
-		//					app_ScreenModes[CURRENT_SCREENMODE][1],
-		//					app_ScreenBPP[CURRENT_SCREENBPP],
-		//					app_Fullscreen))
-		//	return false;
-		//S.InitWindow(app_ScreenModes[CURRENT_SCREENMODE][0], app_ScreenModes[CURRENT_SCREENMODE][1], app_ScreenBPP[CURRENT_SCREENBPP], app_Fullscreen);
-		//S.InitDriver();
-		//InitGL();
-		//ReSizeGLScene(app_ScreenModes[CURRENT_SCREENMODE][0], app_ScreenModes[CURRENT_SCREENMODE][1]);
-		//G.CompileScene();
-		return true;
-		break;
-	case SWITCH_SCREENBPP:
-		//KillGLWindow();
-		S.RemoveCommand(SWITCH_SCREENBPP);
-		S.ForceKey(SWITCH_SCREENBPP, false);
-
-		CURRENT_SCREENBPP++;
-		if (CURRENT_SCREENBPP==MAX_SCREENBPP)
-			CURRENT_SCREENBPP=0;
-		//if (!CreateGLWindow(APP_NAME,
-		//					app_ScreenModes[CURRENT_SCREENMODE][0],
-		//					app_ScreenModes[CURRENT_SCREENMODE][1],
-		//					app_ScreenBPP[CURRENT_SCREENBPP],
-		//					app_Fullscreen))
-		//	return false;
-		//LoadGLTextures();
-		//G.CompileScene();
-		return true;
-		break;
-	case SWITCH_FULLSCREEN:
-		//KillGLWindow();
-		S.RemoveCommand(SWITCH_FULLSCREEN);
-		S.ForceKey(SWITCH_FULLSCREEN, false);
-		S.WindowFullScreen=!S.WindowFullScreen;
-		//if (!CreateGLWindow(APP_NAME,
-		//					app_ScreenModes[CURRENT_SCREENMODE][0],
-		//					app_ScreenModes[CURRENT_SCREENMODE][1],
-		//					app_ScreenBPP[CURRENT_SCREENBPP],
-		//					app_Fullscreen))
-		//	return false;
-		//G.CompileScene();
-		if (S.WindowFullScreen)
-			ShowCursor(false);
-		else
-			ShowCursor(true);
-		return true;
-		break;
 	case WINDOWCREATE:
-		//if (!CreateGLWindow(APP_NAME,
-		//					app_ScreenModes[CURRENT_SCREENMODE][0],
-		//					app_ScreenModes[CURRENT_SCREENMODE][1],
-		//					app_ScreenBPP[CURRENT_SCREENBPP],
-		//					app_Fullscreen))
-		//	return false;
-		//InitGL();
-		//ReSizeGLScene(app_ScreenModes[CURRENT_SCREENMODE][0], app_ScreenModes[CURRENT_SCREENMODE][1]);
-		//LoadGLTextures();
-		//G.CompileScene();
 		return true;
 		break;
 	case WINDOWDESTROY:
-		//KillGLWindow();
 		return true;
 		break;
 	case SAVE_SCREEN:

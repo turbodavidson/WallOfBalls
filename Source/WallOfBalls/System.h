@@ -7,6 +7,7 @@
 #include "Path.h"
 #include "Resources.h"
 #include "Interop.h"
+#include "DataTypes.h"
 
 class System
 {
@@ -37,7 +38,7 @@ public:
 	HWND tmpGetWindowHandle(void);
 	DriverGL11 *GetGL11Driver(void) { return _Driver; }
 	ResourceType *GetResource(int tag);
-	
+	vect2_t GetPrimaryMonitorResolution();
 
 private:
 	bool InitWindow(int width, int height, int bpp, bool fullScreen);
