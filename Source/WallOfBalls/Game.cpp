@@ -6,20 +6,6 @@
 
 Game G;
 
-//SysVar
-GLuint CURRENT_SCREENMODE=3;
-GLuint CURRENT_SCREENBPP=1;
-GLuint MAX_SCREENMODES=4;
-GLuint MAX_SCREENBPP=2;
-GLuint app_ScreenModes[4][2]=	{
-								640,480,
-								800,600,
-								1024,768,
-								2560,1440
-								};
-GLuint app_ScreenBPP[2] = {16,32};
-
-
 //Function Declarations
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -43,17 +29,15 @@ void Game::Init(void)
 	timeofdaycolors[2][0]= 0.5;timeofdaycolors[2][1]= 0.5;timeofdaycolors[2][2]= 1.0;timeofdaycolors[2][3]= 1.0;
 
 	//Window
-	S.WindowWidth = app_ScreenModes[CURRENT_SCREENMODE][0];
-	S.WindowHeight = app_ScreenModes[CURRENT_SCREENMODE][1];
-	S.WindowBitsPP = app_ScreenBPP[CURRENT_SCREENBPP];
+	vect2_t monitorRes = S.GetPrimaryMonitorResolution();
+	S.WindowWidth = (int)monitorRes.x;
+	S.WindowHeight = (int)monitorRes.y;
+	S.WindowBitsPP = 32;
 	S.WindowFullScreen = true;
 	S.Init();
 
 	// Do key bindings
 	S.Bind(VK_ESCAPE,EXIT);
-	S.Bind(VK_F1,SWITCH_SCREENMODE);
-	S.Bind(VK_F2,SWITCH_SCREENBPP);
-	S.Bind(VK_F3,SWITCH_FULLSCREEN);
 	S.Bind('W',MOVE_FOREWARD);
 	S.Bind('S',MOVE_BACKWARD);
 	S.Bind('A',MOVE_LEFT);

@@ -162,3 +162,11 @@ bool System::ForceKey(int message, bool value)
 	}
 	return true;
 }
+
+vect2_t System::GetPrimaryMonitorResolution()
+{
+	return {
+		(double)GetSystemMetrics(SM_CXSCREEN),
+		(double)GetSystemMetrics(SM_CYSCREEN)
+	};
+}
