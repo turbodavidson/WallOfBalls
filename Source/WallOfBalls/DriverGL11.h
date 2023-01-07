@@ -1,0 +1,418 @@
+#ifndef __DRIVERGL11_H
+#define __DRIVERGL11_H
+
+#include "String.h"
+#include "Window.h"
+#include "Driver.h"
+
+#include <Windows.h>
+#include <gl/gl.h>
+#include <gl/glu.h>
+#include "GL/glext.h"
+
+#define STDCALL __stdcall
+
+static GLuint FontBase;
+
+class DriverGL11 : Driver
+{
+private:
+	static String _Vendor;
+	static String _Renderer;
+	static String _Version;
+	static String _Extensions;
+	Window* _Window;
+	int _WindowBitsPP;
+
+private:	
+	
+
+public:
+	HDC _HDC;
+	HGLRC _HRC;
+
+public:
+	DriverGL11(int windowBitsPP);
+	virtual bool Init(Window* window);
+	virtual bool Free(void);
+	virtual bool InitDevice(void);
+	virtual bool FreeDevice(void);
+	void ReSizeGLScene(int width, int height);
+
+// Font
+	static void BuildFont(void);
+	static void KilFont(void);
+	static void Print(GLint x, GLint y, int set, const char *fmt, ...);
+
+
+// Lib
+private:
+	void LoadLib(void);
+	void FreeLib(void);
+
+private:
+	HMODULE _lib;
+
+public:
+	// core functionality
+	static void (STDCALL* Accum)(GLenum op, GLfloat value);
+	static void (STDCALL* AlphaFunc)(GLenum op, GLfloat value);
+	static GLboolean (STDCALL* AreTexturesResident)(GLsizei n, const GLuint* textures, GLboolean* residences);
+	static void (STDCALL* ArrayElement)(GLint i);
+	static void (STDCALL* Begin)(GLenum mode);
+	static void (STDCALL* BindTexture)(GLenum target, GLuint texture);
+	static void (STDCALL* Bitmap)(GLsizei width, GLsizei height, GLfloat xorig, GLfloat yorig, GLfloat xmove, GLfloat ymove, const GLubyte* bitmap);
+	static void (STDCALL* BlendFunc)(GLenum sfactor, GLenum dfactor);
+	static void (STDCALL* CallList)(GLuint list);
+	static void (STDCALL* CallLists)(GLsizei n, GLenum type, const GLvoid* lists);
+	static void (STDCALL* Clear)(GLbitfield mask);
+	static void (STDCALL* ClearAccum)(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
+	static void (STDCALL* ClearColor)(GLclampf red, GLclampf green, GLclampf blue, GLclampf alpha);
+	static void (STDCALL* ClearDepth)(GLclampd depth);
+	static void (STDCALL* ClearIndex)(GLfloat c);
+	static void (STDCALL* ClearStencil)(GLint s);
+	static void (STDCALL* ClipPlane)(GLenum plane, const GLdouble* equation);
+	static void (STDCALL* Color3b)(GLbyte red, GLbyte green, GLbyte blue);
+	static void (STDCALL* Color3bv)(const GLbyte* v);
+	static void (STDCALL* Color3d)(GLdouble red, GLdouble green, GLdouble blue);
+	static void (STDCALL* Color3dv)(const GLdouble* v);
+	static void (STDCALL* Color3f)(GLfloat red, GLfloat green, GLfloat blue);
+	static void (STDCALL* Color3fv)(const GLfloat* v);
+	static void (STDCALL* Color3i)(GLint red, GLint green, GLint blue);
+	static void (STDCALL* Color3iv)(const GLint* v);
+	static void (STDCALL* Color3s)(GLshort red, GLshort green, GLshort blue);
+	static void (STDCALL* Color3sv)(const GLshort* v);
+	static void (STDCALL* Color3ub)(GLubyte red, GLubyte green, GLubyte blue);
+	static void (STDCALL* Color3ubv)(const GLubyte* v);
+	static void (STDCALL* Color3ui)(GLuint red, GLuint green, GLuint blue);
+	static void (STDCALL* Color3uiv)(const GLuint* v);
+	static void (STDCALL* Color3us)(GLushort red, GLushort green, GLushort blue);
+	static void (STDCALL* Color3usv)(const GLushort* v);
+	static void (STDCALL* Color4b)(GLbyte red, GLbyte green, GLbyte blue, GLbyte alpha);
+	static void (STDCALL* Color4bv)(const GLbyte* v);
+	static void (STDCALL* Color4d)(GLdouble red, GLdouble green, GLdouble blue, GLdouble alpha);
+	static void (STDCALL* Color4dv)(const GLdouble* v);
+	static void (STDCALL* Color4f)(GLfloat red, GLfloat green, GLfloat blue, GLfloat alpha);
+	static void (STDCALL* Color4fv)(const GLfloat* v);
+	static void (STDCALL* Color4i)(GLint red, GLint green, GLint blue, GLint alpha);
+	static void (STDCALL* Color4iv)(const GLint* v);
+	static void (STDCALL* Color4s)(GLshort red, GLshort green, GLshort blue, GLshort alpha);
+	static void (STDCALL* Color4sv)(const GLshort* v);
+	static void (STDCALL* Color4ub)(GLubyte red, GLubyte green, GLubyte blue, GLubyte alpha);
+	static void (STDCALL* Color4ubv)(const GLubyte* v);
+	static void (STDCALL* Color4ui)(GLuint red, GLuint green, GLuint blue, GLuint alpha);
+	static void (STDCALL* Color4uiv)(const GLuint* v);
+	static void (STDCALL* Color4us)(GLushort red, GLushort green, GLushort blue, GLushort alpha);
+	static void (STDCALL* Color4usv)(const GLushort* v);
+	static void (STDCALL* ColorMask)(GLboolean red, GLboolean green, GLboolean blue, GLboolean alpha);
+	static void (STDCALL* ColorMaterial)(GLenum face, GLenum mode);
+	static void (STDCALL* ColorPointer)(GLint size, GLenum type, GLsizei stride, const GLvoid* pointer);
+	static void (STDCALL* CopyPixels)(GLint x, GLint y, GLsizei width, GLsizei height, GLenum type);
+	static void (STDCALL* CopyTexImage1D)(GLenum target, GLint level, GLenum internalFormat, GLint x, GLint y, GLsizei width, GLint border);
+	static void (STDCALL* CopyTexImage2D)(GLenum target, GLint level, GLenum internalFormat, GLint x, GLint y, GLsizei width, GLsizei height, GLint border);
+	static void (STDCALL* CopyTexSubImage1D)(GLenum target, GLint level, GLint xoffset, GLint x, GLint y, GLsizei width);
+	static void (STDCALL* CopyTexSubImage2D)(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLint x, GLint y, GLsizei width, GLsizei height);
+	static void (STDCALL* CullFace)(GLenum mode);
+	static void (STDCALL* DeleteLists)(GLuint list, GLsizei range);
+	static void (STDCALL* DeleteTextures)(GLsizei n, const GLuint* textures);
+	static void (STDCALL* DepthFunc)(GLenum func);
+	static void (STDCALL* DepthMask)(GLboolean flag);
+	static void (STDCALL* DepthRange)(GLclampd zNear, GLclampd zFar);
+	static void (STDCALL* Disable)(GLenum cap);
+	static void (STDCALL* DisableClientState)(GLenum array);
+	static void (STDCALL* DrawArrays)(GLenum mode, GLint first, GLsizei count);
+	static void (STDCALL* DrawBuffer)(GLenum mode);
+	static void (STDCALL* DrawElements)(GLenum mode, GLsizei count, GLenum type, const GLvoid* indices);
+	static void (STDCALL* DrawPixels)(GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid* pixels);
+	static void (STDCALL* EdgeFlag)(GLboolean flag);
+	static void (STDCALL* EdgeFlagPointer)(GLsizei stride, const GLvoid* pointer);
+	static void (STDCALL* EdgeFlagv)(const GLboolean* flag);
+	static void (STDCALL* Enable)(GLenum cap);
+	static void (STDCALL* EnableClientState)(GLenum array);
+	static void (STDCALL* End)(void);
+	static void (STDCALL* EndList)(void);
+	static void (STDCALL* EvalCoord1d)(GLdouble u);
+	static void (STDCALL* EvalCoord1dv)(const GLdouble* u);
+	static void (STDCALL* EvalCoord1f)(GLfloat u);
+	static void (STDCALL* EvalCoord1fv)(const GLfloat* u);
+	static void (STDCALL* EvalCoord2d)(GLdouble u, GLdouble v);
+	static void (STDCALL* EvalCoord2dv)(const GLdouble* u);
+	static void (STDCALL* EvalCoord2f)(GLfloat u, GLfloat v);
+	static void (STDCALL* EvalCoord2fv)(const GLfloat* u);
+	static void (STDCALL* EvalMesh1)(GLenum mode, GLint i1, GLint i2);
+	static void (STDCALL* EvalMesh2)(GLenum mode, GLint i1, GLint i2, GLint j1, GLint j2);
+	static void (STDCALL* EvalPoint1)(GLint i);
+	static void (STDCALL* EvalPoint2)(GLint i, GLint j);
+	static void (STDCALL* FeedbackBuffer)(GLsizei size, GLenum type, GLfloat* buffer);
+	static void (STDCALL* Finish)(void);
+	static void (STDCALL* Flush)(void);
+	static void (STDCALL* Fogf)(GLenum pname, GLfloat param);
+	static void (STDCALL* Fogfv)(GLenum pname, const GLfloat* params);
+	static void (STDCALL* Fogi)(GLenum pname, GLint param);
+	static void (STDCALL* Fogiv)(GLenum pname, const GLint* params);
+	static void (STDCALL* FrontFace)(GLenum mode);
+	static void (STDCALL* Frustum)(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble zNear, GLdouble zFar);
+	static GLuint (STDCALL* GenLists)(GLsizei range);
+	static void (STDCALL* GenTextures)(GLsizei n, GLuint* textures);
+	static void (STDCALL* GetBooleanv)(GLenum pname, GLboolean* params);
+	static void (STDCALL* GetClipPlane)(GLenum plane, GLdouble* equation);
+	static void (STDCALL* GetDoublev)(GLenum pname, GLdouble* params);
+	static GLenum (STDCALL* GetError)(void);
+	static void (STDCALL* GetFloatv)(GLenum pname, GLfloat* params);
+	static void (STDCALL* GetIntegerv)(GLenum pname, GLint* params);
+	static void (STDCALL* GetLightfv)(GLenum light, GLenum pname, GLfloat* params);
+	static void (STDCALL* GetLightiv)(GLenum light, GLenum pname, GLint* params);
+	static void (STDCALL* GetMapdv)(GLenum target, GLenum query, GLdouble* v);
+	static void (STDCALL* GetMapfv)(GLenum target, GLenum query, GLfloat* v);
+	static void (STDCALL* GetMapiv)(GLenum target, GLenum query, GLint* v);
+	static void (STDCALL* GetMaterialfv)(GLenum face, GLenum pname, GLfloat* params);
+	static void (STDCALL* GetMaterialiv)(GLenum face, GLenum pname, GLint* params);
+	static void (STDCALL* GetPixelMapfv)(GLenum map, GLfloat* values);
+	static void (STDCALL* GetPixelMapuiv)(GLenum map, GLuint* values);
+	static void (STDCALL* GetPixelMapusv)(GLenum map, GLushort* values);
+	static void (STDCALL* GetPointerv)(GLenum pname, GLvoid** params);
+	static void (STDCALL* GetPolygonStipple)(GLubyte* mask);
+	static const GLubyte*  (STDCALL* GetString)(GLenum name);
+	static void (STDCALL* GetTexEnvfv)(GLenum target, GLenum pname, GLfloat* params);
+	static void (STDCALL* GetTexEnviv)(GLenum target, GLenum pname, GLint* params);
+	static void (STDCALL* GetTexGendv)(GLenum coord, GLenum pname, GLdouble* params);
+	static void (STDCALL* GetTexGenfv)(GLenum coord, GLenum pname, GLfloat* params);
+	static void (STDCALL* GetTexGeniv)(GLenum coord, GLenum pname, GLint* params);
+	static void (STDCALL* GetTexImage)(GLenum target, GLint level, GLenum format, GLenum type, GLvoid* pixels);
+	static void (STDCALL* GetTexLevelParameterfv)(GLenum target, GLint level, GLenum pname, GLfloat* params);
+	static void (STDCALL* GetTexLevelParameteriv)(GLenum target, GLint level, GLenum pname, GLint* params);
+	static void (STDCALL* GetTexParameterfv)(GLenum target, GLenum pname, GLfloat* params);
+	static void (STDCALL* GetTexParameteriv)(GLenum target, GLenum pname, GLint* params);
+	static void (STDCALL* Hint)(GLenum target, GLenum mode);
+	static void (STDCALL* IndexMask)(GLuint mask);
+	static void (STDCALL* IndexPointer)(GLenum type, GLsizei stride, const GLvoid* pointer);
+	static void (STDCALL* Indexd)(GLdouble c);
+	static void (STDCALL* Indexdv)(const GLdouble* c);
+	static void (STDCALL* Indexf)(GLfloat c);
+	static void (STDCALL* Indexfv)(const GLfloat* c);
+	static void (STDCALL* Indexi)(GLint c);
+	static void (STDCALL* Indexiv)(const GLint* c);
+	static void (STDCALL* Indexs)(GLshort c);
+	static void (STDCALL* Indexsv)(const GLshort* c);
+	static void (STDCALL* Indexub)(GLubyte c);
+	static void (STDCALL* Indexubv)(const GLubyte* c);
+	static void (STDCALL* InitNames)(void);
+	static void (STDCALL* InterleavedArrays)(GLenum format, GLsizei stride, const GLvoid* pointer);
+	static GLboolean (STDCALL* IsEnabled)(GLenum cap);
+	static GLboolean (STDCALL* IsList)(GLuint list);
+	static GLboolean (STDCALL* IsTexture)(GLuint texture);
+	static void (STDCALL* LightModelf)(GLenum pname, GLfloat param);
+	static void (STDCALL* LightModelfv)(GLenum pname, const GLfloat* params);
+	static void (STDCALL* LightModeli)(GLenum pname, GLint param);
+	static void (STDCALL* LightModeliv)(GLenum pname, const GLint* params);
+	static void (STDCALL* Lightf)(GLenum light, GLenum pname, GLfloat param);
+	static void (STDCALL* Lightfv)(GLenum light, GLenum pname, const GLfloat* params);
+	static void (STDCALL* Lighti)(GLenum light, GLenum pname, GLint param);
+	static void (STDCALL* Lightiv)(GLenum light, GLenum pname, const GLint* params);
+	static void (STDCALL* LineStipple)(GLint factor, GLushort pattern);
+	static void (STDCALL* LineWidth)(GLfloat width);
+	static void (STDCALL* ListBase)(GLuint base);
+	static void (STDCALL* LoadIdentity)(void);
+	static void (STDCALL* LoadMatrixd)(const GLdouble* m);
+	static void (STDCALL* LoadMatrixf)(const GLfloat* m);
+	static void (STDCALL* LoadName)(GLuint name);
+	static void (STDCALL* LogicOp)(GLenum opcode);
+	static void (STDCALL* Map1d)(GLenum target, GLdouble u1, GLdouble u2, GLint stride, GLint order, const GLdouble* points);
+	static void (STDCALL* Map1f)(GLenum target, GLfloat u1, GLfloat u2, GLint stride, GLint order, const GLfloat* points);
+	static void (STDCALL* Map2d)(GLenum target, GLdouble u1, GLdouble u2, GLint ustride, GLint uorder, GLdouble v1, GLdouble v2, GLint vstride, GLint vorder, const GLdouble* points);
+	static void (STDCALL* Map2f)(GLenum target, GLfloat u1, GLfloat u2, GLint ustride, GLint uorder, GLfloat v1, GLfloat v2, GLint vstride, GLint vorder, const GLfloat* points);
+	static void (STDCALL* MapGrid1d)(GLint un, GLdouble u1, GLdouble u2);
+	static void (STDCALL* MapGrid1f)(GLint un, GLfloat u1, GLfloat u2);
+	static void (STDCALL* MapGrid2d)(GLint un, GLdouble u1, GLdouble u2, GLint vn, GLdouble v1, GLdouble v2);
+	static void (STDCALL* MapGrid2f)(GLint un, GLfloat u1, GLfloat u2, GLint vn, GLfloat v1, GLfloat v2);
+	static void (STDCALL* Materialf)(GLenum face, GLenum pname, GLfloat param);
+	static void (STDCALL* Materialfv)(GLenum face, GLenum pname, const GLfloat* params);
+	static void (STDCALL* Materiali)(GLenum face, GLenum pname, GLint param);
+	static void (STDCALL* Materialiv)(GLenum face, GLenum pname, const GLint* params);
+	static void (STDCALL* MatrixMode)(GLenum mode);
+	static void (STDCALL* MultMatrixd)(const GLdouble* m);
+	static void (STDCALL* MultMatrixf)(const GLfloat* m);
+	static void (STDCALL* NewList)(GLuint list, GLenum mode);
+	static void (STDCALL* Normal3b)(GLbyte nx, GLbyte ny, GLbyte nz);
+	static void (STDCALL* Normal3bv)(const GLbyte* v);
+	static void (STDCALL* Normal3d)(GLdouble nx, GLdouble ny, GLdouble nz);
+	static void (STDCALL* Normal3dv)(const GLdouble* v);
+	static void (STDCALL* Normal3f)(GLfloat nx, GLfloat ny, GLfloat nz);
+	static void (STDCALL* Normal3fv)(const GLfloat* v);
+	static void (STDCALL* Normal3i)(GLint nx, GLint ny, GLint nz);
+	static void (STDCALL* Normal3iv)(const GLint* v);
+	static void (STDCALL* Normal3s)(GLshort nx, GLshort ny, GLshort nz);
+	static void (STDCALL* Normal3sv)(const GLshort* v);
+	static void (STDCALL* NormalPointer)(GLenum type, GLsizei stride, const GLvoid* pointer);
+	static void (STDCALL* Ortho)(GLdouble left, GLdouble right, GLdouble bottom, GLdouble top, GLdouble zNear, GLdouble zFar);
+	static void (STDCALL* PassThrough)(GLfloat token);
+	static void (STDCALL* PixelMapfv)(GLenum map, GLsizei mapsize, const GLfloat* values);
+	static void (STDCALL* PixelMapuiv)(GLenum map, GLsizei mapsize, const GLuint* values);
+	static void (STDCALL* PixelMapusv)(GLenum map, GLsizei mapsize, const GLushort* values);
+	static void (STDCALL* PixelStoref)(GLenum pname, GLfloat param);
+	static void (STDCALL* PixelStorei)(GLenum pname, GLint param);
+	static void (STDCALL* PixelTransferf)(GLenum pname, GLfloat param);
+	static void (STDCALL* PixelTransferi)(GLenum pname, GLint param);
+	static void (STDCALL* PixelZoom)(GLfloat xfactor, GLfloat yfactor);
+	static void (STDCALL* PointSize)(GLfloat size);
+	static void (STDCALL* PolygonMode)(GLenum face, GLenum mode);
+	static void (STDCALL* PolygonOffset)(GLfloat factor, GLfloat units);
+	static void (STDCALL* PolygonStipple)(const GLubyte* mask);
+	static void (STDCALL* PopAttrib)(void);
+	static void (STDCALL* PopClientAttrib)(void);
+	static void (STDCALL* PopMatrix)(void);
+	static void (STDCALL* PopName)(void);
+	static void (STDCALL* PrioritizeTextures)(GLsizei n, const GLuint* textures, const GLclampf* priorities);
+	static void (STDCALL* PushAttrib)(GLbitfield mask);
+	static void (STDCALL* PushClientAttrib)(GLbitfield mask);
+	static void (STDCALL* PushMatrix)(void);
+	static void (STDCALL* PushName)(GLuint name);
+	static void (STDCALL* RasterPos2d)(GLdouble x, GLdouble y);
+	static void (STDCALL* RasterPos2dv)(const GLdouble* v);
+	static void (STDCALL* RasterPos2f)(GLfloat x, GLfloat y);
+	static void (STDCALL* RasterPos2fv)(const GLfloat* v);
+	static void (STDCALL* RasterPos2i)(GLint x, GLint y);
+	static void (STDCALL* RasterPos2iv)(const GLint* v);
+	static void (STDCALL* RasterPos2s)(GLshort x, GLshort y);
+	static void (STDCALL* RasterPos2sv)(const GLshort* v);
+	static void (STDCALL* RasterPos3d)(GLdouble x, GLdouble y, GLdouble z);
+	static void (STDCALL* RasterPos3dv)(const GLdouble* v);
+	static void (STDCALL* RasterPos3f)(GLfloat x, GLfloat y, GLfloat z);
+	static void (STDCALL* RasterPos3fv)(const GLfloat* v);
+	static void (STDCALL* RasterPos3i)(GLint x, GLint y, GLint z);
+	static void (STDCALL* RasterPos3iv)(const GLint* v);
+	static void (STDCALL* RasterPos3s)(GLshort x, GLshort y, GLshort z);
+	static void (STDCALL* RasterPos3sv)(const GLshort* v);
+	static void (STDCALL* RasterPos4d)(GLdouble x, GLdouble y, GLdouble z, GLdouble w);
+	static void (STDCALL* RasterPos4dv)(const GLdouble* v);
+	static void (STDCALL* RasterPos4f)(GLfloat x, GLfloat y, GLfloat z, GLfloat w);
+	static void (STDCALL* RasterPos4fv)(const GLfloat* v);
+	static void (STDCALL* RasterPos4i)(GLint x, GLint y, GLint z, GLint w);
+	static void (STDCALL* RasterPos4iv)(const GLint* v);
+	static void (STDCALL* RasterPos4s)(GLshort x, GLshort y, GLshort z, GLshort w);
+	static void (STDCALL* RasterPos4sv)(const GLshort* v);
+	static void (STDCALL* ReadBuffer)(GLenum mode);
+	static void (STDCALL* ReadPixels)(GLint x, GLint y, GLsizei width, GLsizei height, GLenum format, GLenum type, GLvoid* pixels);
+	static void (STDCALL* Rectd)(GLdouble x1, GLdouble y1, GLdouble x2, GLdouble y2);
+	static void (STDCALL* Rectdv)(const GLdouble* v1, const GLdouble* v2);
+	static void (STDCALL* Rectf)(GLfloat x1, GLfloat y1, GLfloat x2, GLfloat y2);
+	static void (STDCALL* Rectfv)(const GLfloat* v1, const GLfloat* v2);
+	static void (STDCALL* Recti)(GLint x1, GLint y1, GLint x2, GLint y2);
+	static void (STDCALL* Rectiv)(const GLint* v1, const GLint* v2);
+	static void (STDCALL* Rects)(GLshort x1, GLshort y1, GLshort x2, GLshort y2);
+	static void (STDCALL* Rectsv)(const GLshort* v1, const GLshort* v2);
+	static GLint (STDCALL* RenderMode)(GLenum mode);
+	static void (STDCALL* Rotated)(GLdouble angle, GLdouble x, GLdouble y, GLdouble z);
+	static void (STDCALL* Rotatef)(GLfloat angle, GLfloat x, GLfloat y, GLfloat z);
+	static void (STDCALL* Scaled)(GLdouble x, GLdouble y, GLdouble z);
+	static void (STDCALL* Scalef)(GLfloat x, GLfloat y, GLfloat z);
+	static void (STDCALL* Scissor)(GLint x, GLint y, GLsizei width, GLsizei height);
+	static void (STDCALL* SelectBuffer)(GLsizei size, GLuint* buffer);
+	static void (STDCALL* ShadeModel)(GLenum mode);
+	static void (STDCALL* StencilFunc)(GLenum func, GLint ref, GLuint mask);
+	static void (STDCALL* StencilMask)(GLuint mask);
+	static void (STDCALL* StencilOp)(GLenum fail, GLenum zfail, GLenum zpass);
+	static void (STDCALL* TexCoord1d)(GLdouble s);
+	static void (STDCALL* TexCoord1dv)(const GLdouble* v);
+	static void (STDCALL* TexCoord1f)(GLfloat s);
+	static void (STDCALL* TexCoord1fv)(const GLfloat* v);
+	static void (STDCALL* TexCoord1i)(GLint s);
+	static void (STDCALL* TexCoord1iv)(const GLint* v);
+	static void (STDCALL* TexCoord1s)(GLshort s);
+	static void (STDCALL* TexCoord1sv)(const GLshort* v);
+	static void (STDCALL* TexCoord2d)(GLdouble s, GLdouble t);
+	static void (STDCALL* TexCoord2dv)(const GLdouble* v);
+	static void (STDCALL* TexCoord2f)(GLfloat s, GLfloat t);
+	static void (STDCALL* TexCoord2fv)(const GLfloat* v);
+	static void (STDCALL* TexCoord2i)(GLint s, GLint t);
+	static void (STDCALL* TexCoord2iv)(const GLint* v);
+	static void (STDCALL* TexCoord2s)(GLshort s, GLshort t);
+	static void (STDCALL* TexCoord2sv)(const GLshort* v);
+	static void (STDCALL* TexCoord3d)(GLdouble s, GLdouble t, GLdouble r);
+	static void (STDCALL* TexCoord3dv)(const GLdouble* v);
+	static void (STDCALL* TexCoord3f)(GLfloat s, GLfloat t, GLfloat r);
+	static void (STDCALL* TexCoord3fv)(const GLfloat* v);
+	static void (STDCALL* TexCoord3i)(GLint s, GLint t, GLint r);
+	static void (STDCALL* TexCoord3iv)(const GLint* v);
+	static void (STDCALL* TexCoord3s)(GLshort s, GLshort t, GLshort r);
+	static void (STDCALL* TexCoord3sv)(const GLshort* v);
+	static void (STDCALL* TexCoord4d)(GLdouble s, GLdouble t, GLdouble r, GLdouble q);
+	static void (STDCALL* TexCoord4dv)(const GLdouble* v);
+	static void (STDCALL* TexCoord4f)(GLfloat s, GLfloat t, GLfloat r, GLfloat q);
+	static void (STDCALL* TexCoord4fv)(const GLfloat* v);
+	static void (STDCALL* TexCoord4i)(GLint s, GLint t, GLint r, GLint q);
+	static void (STDCALL* TexCoord4iv)(const GLint* v);
+	static void (STDCALL* TexCoord4s)(GLshort s, GLshort t, GLshort r, GLshort q);
+	static void (STDCALL* TexCoord4sv)(const GLshort* v);
+	static void (STDCALL* TexCoordPointer)(GLint size, GLenum type, GLsizei stride, const GLvoid* pointer);
+	static void (STDCALL* TexEnvf)(GLenum target, GLenum pname, GLfloat param);
+	static void (STDCALL* TexEnvfv)(GLenum target, GLenum pname, const GLfloat* params);
+	static void (STDCALL* TexEnvi)(GLenum target, GLenum pname, GLint param);
+	static void (STDCALL* TexEnviv)(GLenum target, GLenum pname, const GLint* params);
+	static void (STDCALL* TexGend)(GLenum coord, GLenum pname, GLdouble param);
+	static void (STDCALL* TexGendv)(GLenum coord, GLenum pname, const GLdouble* params);
+	static void (STDCALL* TexGenf)(GLenum coord, GLenum pname, GLfloat param);
+	static void (STDCALL* TexGenfv)(GLenum coord, GLenum pname, const GLfloat* params);
+	static void (STDCALL* TexGeni)(GLenum coord, GLenum pname, GLint param);
+	static void (STDCALL* TexGeniv)(GLenum coord, GLenum pname, const GLint* params);
+	static void (STDCALL* TexImage1D)(GLenum target, GLint level, GLint internalformat, GLsizei width, GLint border, GLenum format, GLenum type, const GLvoid* pixels);
+	static void (STDCALL* TexImage2D)(GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid* pixels);
+	static void (STDCALL* TexParameterf)(GLenum target, GLenum pname, GLfloat param);
+	static void (STDCALL* TexParameterfv)(GLenum target, GLenum pname, const GLfloat* params);
+	static void (STDCALL* TexParameteri)(GLenum target, GLenum pname, GLint param);
+	static void (STDCALL* TexParameteriv)(GLenum target, GLenum pname, const GLint* params);
+	static void (STDCALL* TexSubImage1D)(GLenum target, GLint level, GLint xoffset, GLsizei width, GLenum format, GLenum type, const GLvoid* pixels);
+	static void (STDCALL* TexSubImage2D)(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid* pixels);
+	static void (STDCALL* Translated)(GLdouble x, GLdouble y, GLdouble z);
+	static void (STDCALL* Translatef)(GLfloat x, GLfloat y, GLfloat z);
+	static void (STDCALL* Vertex2d)(GLdouble x, GLdouble y);
+	static void (STDCALL* Vertex2dv)(const GLdouble* v);
+	static void (STDCALL* Vertex2f)(GLfloat x, GLfloat y);
+	static void (STDCALL* Vertex2fv)(const GLfloat* v);
+	static void (STDCALL* Vertex2i)(GLint x, GLint y);
+	static void (STDCALL* Vertex2iv)(const GLint* v);
+	static void (STDCALL* Vertex2s)(GLshort x, GLshort y);
+	static void (STDCALL* Vertex2sv)(const GLshort* v);
+	static void (STDCALL* Vertex3d)(GLdouble x, GLdouble y, GLdouble z);
+	static void (STDCALL* Vertex3dv)(const GLdouble* v);
+	static void (STDCALL* Vertex3f)(GLfloat x, GLfloat y, GLfloat z);
+	static void (STDCALL* Vertex3fv)(const GLfloat* v);
+	static void (STDCALL* Vertex3i)(GLint x, GLint y, GLint z);
+	static void (STDCALL* Vertex3iv)(const GLint* v);
+	static void (STDCALL* Vertex3s)(GLshort x, GLshort y, GLshort z);
+	static void (STDCALL* Vertex3sv)(const GLshort* v);
+	static void (STDCALL* Vertex4d)(GLdouble x, GLdouble y, GLdouble z, GLdouble w);
+	static void (STDCALL* Vertex4dv)(const GLdouble* v);
+	static void (STDCALL* Vertex4f)(GLfloat x, GLfloat y, GLfloat z, GLfloat w);
+	static void (STDCALL* Vertex4fv)(const GLfloat* v);
+	static void (STDCALL* Vertex4i)(GLint x, GLint y, GLint z, GLint w);
+	static void (STDCALL* Vertex4iv)(const GLint* v);
+	static void (STDCALL* Vertex4s)(GLshort x, GLshort y, GLshort z, GLshort w);
+	static void (STDCALL* Vertex4sv)(const GLshort* v);
+	static void (STDCALL* VertexPointer)(GLint size, GLenum type, GLsizei stride, const GLvoid* pointer);
+	static void (STDCALL* Viewport)(GLint x, GLint y, GLsizei width, GLsizei height);
+
+	// wgl
+	static BOOL  (STDCALL* wglCopyContext)(HGLRC, HGLRC, UINT);
+	static HGLRC (STDCALL* wglCreateContext)(HDC);
+	static HGLRC (STDCALL* wglCreateLayerContext)(HDC, int);
+	static BOOL  (STDCALL* wglDeleteContext)(HGLRC);
+	static HGLRC (STDCALL* wglGetCurrentContext)(VOID);
+	static HDC   (STDCALL* wglGetCurrentDC)(VOID);
+	static PROC  (STDCALL* wglGetProcAddress)(LPCSTR);
+	static BOOL  (STDCALL* wglMakeCurrent)(HDC, HGLRC);
+	static BOOL  (STDCALL* wglShareLists)(HGLRC, HGLRC);
+	static BOOL  (STDCALL* wglUseFontBitmapsA)(HDC, DWORD, DWORD, DWORD);
+	static BOOL  (STDCALL* wglUseFontBitmapsW)(HDC, DWORD, DWORD, DWORD);
+	static BOOL  (STDCALL* wglSwapBuffers)(HDC);
+	static BOOL  (STDCALL* wglUseFontOutlinesA)(HDC, DWORD, DWORD, DWORD, FLOAT, FLOAT, int, LPGLYPHMETRICSFLOAT);
+	static BOOL  (STDCALL* wglUseFontOutlinesW)(HDC, DWORD, DWORD, DWORD, FLOAT, FLOAT, int, LPGLYPHMETRICSFLOAT);
+	static BOOL  (STDCALL* wglDescribeLayerPlane)(HDC, int, int, UINT, LPLAYERPLANEDESCRIPTOR);
+	static int   (STDCALL* wglSetLayerPaletteEntries)(HDC, int, int, int, CONST COLORREF *);
+	static int   (STDCALL* wglGetLayerPaletteEntries)(HDC, int, int, int, COLORREF *);
+	static BOOL  (STDCALL* wglRealizeLayerPalette)(HDC, int, BOOL);
+	static BOOL  (STDCALL* wglSwapLayerBuffers)(HDC, UINT);
+	static DWORD (STDCALL* wglSwapMultipleBuffers)(UINT, CONST WGLSWAP *);
+};
+
+#endif

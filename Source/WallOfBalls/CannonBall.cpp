@@ -3,7 +3,9 @@
 #include "sound.h"
 #include <math.h>
 
-extern Camera *DefaultView;
+#include "Game.h"
+
+//extern Camera *DefaultView;
 extern SoundManager* Sounds;
 
 float rnd(int);
@@ -55,38 +57,39 @@ void cannonball::update()
 
 void cannonball::render()
 {
-	glDisable(GL_DEPTH_TEST);
+	DriverGL11::Disable(GL_DEPTH_TEST);
 	if (deployed) update();
 	//glPrint(0,100,1,"Rendering...");
-	glBindTexture(GL_TEXTURE_2D,CBTexture->texID);
+	//DriverGL11::BindTexture(GL_TEXTURE_2D,CBTexture->texID);
+	DriverGL11::BindTexture(GL_TEXTURE_2D, G.cann.texId);
 
-	glBegin(GL_TRIANGLE_STRIP);
-	glTexCoord2d(0.0,1.0);
-	double anglex=DEG_TO_RAD*DefaultView->getAngleY();
-	double angley=DEG_TO_RAD*DefaultView->getAngleY();
+	DriverGL11::Begin(GL_TRIANGLE_STRIP);
+	DriverGL11::TexCoord2d(0.0,1.0);
+	double anglex=DEG_TO_RAD*G.DefaultView->getAngleY();
+	double angley=DEG_TO_RAD*G.DefaultView->getAngleY();
 
-	glVertex3d	(position.x-(5.0*cos(anglex)),
+	DriverGL11::Vertex3d	(position.x-(5.0*cos(anglex)),
 				position.y+5.0,
 				position.z-(5.0*sin(anglex)));
-	glTexCoord2d(1.0,1.0);
-	glVertex3d	(position.x+(5.0*cos(anglex)),
+	DriverGL11::TexCoord2d(1.0,1.0);
+	DriverGL11::Vertex3d	(position.x+(5.0*cos(anglex)),
 				position.y+5.0,
 				position.z+(5.0*sin(anglex)));
-	glTexCoord2d(0.0,0.0);
-	glVertex3d	(position.x-(5.0*cos(anglex)),
+	DriverGL11::TexCoord2d(0.0,0.0);
+	DriverGL11::Vertex3d	(position.x-(5.0*cos(anglex)),
 				position.y-5.0,
 				position.z-(5.0*sin(anglex)));
-	glTexCoord2d(1.0,0.0);
-	glVertex3d	(position.x+(5.0*cos(anglex)),
+	DriverGL11::TexCoord2d(1.0,0.0);
+	DriverGL11::Vertex3d	(position.x+(5.0*cos(anglex)),
 				position.y-5.0,
 				position.z+(5.0*sin(anglex)));
-	glEnd();
-	glEnable(GL_DEPTH_TEST);
+	DriverGL11::End();
+	DriverGL11::Enable(GL_DEPTH_TEST);
 }
 
 void cannonball::deploy()
 {
-	Sounds->play(TREB_SOUND);
+	//Sounds->play(TREB_SOUND);
 	Timer->start();
 	deployed=true;
 	velocity.y=double(rnd(9)+5.0);
@@ -118,4 +121,9 @@ bool cannonball::checkforcollision(double x,double y,double z)
 		z<(position.z+15.0))
 		return true;
 	return false;
+}
+
+vect3_t cannonball::getPosition()
+{
+	return position;
 }
